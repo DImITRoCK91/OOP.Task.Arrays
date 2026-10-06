@@ -4,6 +4,27 @@ package main.ZabGU;
 import java.util.Random; // Данный класс используется для генерации псевдослучайных чисел
 public class Main {
 
+    // Функция, которая выполняет тестирование функции calcComp при помощи assert
+    static void runTests() {
+
+        // проверка на простые положительные числа
+        assert Math.abs(calcComp(new double[]{1.0, 2.0, 3.0}) - 6.0) < 1e-6;
+
+        // проверка на отрицательно число
+        assert Math.abs(calcComp(new double[]{-1.5, 2.0}) - 3.0) < 1e-6;
+
+        // проверка на большие числа
+        assert Math.abs(calcComp(new double[]{500.0, -501.0}) - 250500.0) < 1e-3; // точность 10^-3
+
+        // проверка на пустом массиве (произведение = 1)
+        assert Math.abs(calcComp(new double[]{}) - 1.0) < 1e-6;
+
+        // проверка с нулевым элементом (произведение = 0)
+        assert Math.abs(calcComp(new double[]{5.0, 0.0, 7.0}) - 0.0) < 1e-6;
+
+    }
+
+
     /// Функция для заполнения массива псевдослучайными числами
     // Формальные параметры: arr типа данных double, min - нижняя граница диапазона случайных чисел (double), max -  верхняя
     // Функции ничего не возвращает
@@ -50,6 +71,8 @@ public class Main {
     }
 
     public static void main(String[] args) {
+        runTests();
+
         double arr[] = new double[20]; // Создаём объект массива типа данных
         fillRandom(arr, -10.0, 10.0);
 
