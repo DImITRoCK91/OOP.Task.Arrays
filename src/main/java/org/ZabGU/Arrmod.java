@@ -1,9 +1,8 @@
-// Автор: Прасков Дмитрий Сергеевич - ИВТ-25
-// Задание №2 - работа с массивами (в задачнике №136_g)
-package main.ZabGU;
-import java.util.Random; // Данный класс используется для генерации псевдослучайных чисел
-public class Main {
+package org.ZabGU;
 
+import java.util.Random;
+
+public class Arrmod {
     // Функция, которая выполняет тестирование функции calcComp при помощи assert
     static void runTests() {
 
@@ -70,16 +69,4 @@ public class Main {
         System.out.println();
     }
 
-    public static void main(String[] args) {
-        runTests();
-
-        double arr[] = new double[20]; // Создаём объект массива типа данных
-        fillRandom(arr, -10.0, 10.0);
-
-        double comp = calcComp(arr);
-
-        printArr(arr, 10);
-
-        System.out.printf("%.2f \n", comp);
-    }
 }
