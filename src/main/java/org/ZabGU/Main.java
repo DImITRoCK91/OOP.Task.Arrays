@@ -2,6 +2,8 @@
 // Задание №2 - работа с массивами (в задачнике №136_g)
 package org.ZabGU;
 
+import java.util.InputMismatchException;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class Main {
@@ -10,43 +12,72 @@ public class Main {
 
         Arrmod.runTests();
 
-        int a, inline; double min, max;
+        try {
+            int a, inline;
+            double min, max;
 
-        if (args.length > 0 && (args[0].equals("help") || args[0].equals("--help"))){
-            printhelp();
-            return;
+            if (args.length > 0 && (args[0].equals("help") || args[0].equals("--help"))) {
+                printhelp();
+                return;
+            }
+
+            if (args.length == 4) {
+                a = Integer.parseInt(args[0]);
+                min = Double.parseDouble(args[1]);
+                max = Double.parseDouble(args[2]);
+                inline = Integer.parseInt(args[3]);
+            } else if (args.length == 0) {
+                Scanner in = new Scanner(System.in);
+
+                System.out.println("Введите кол-во элементов в массиве");
+                a = in.nextInt();
+
+                System.out.println("Введите диапазон значений (нижняя и верхняя границы через пробел)");
+                min = in.nextDouble();
+                max = in.nextDouble();
+
+                System.out.println("Введите сколько нужно вывести элементов на одной строке");
+                inline = in.nextInt();
+            } else {
+                throw new IllegalArgumentException("Неверное кол-во аргументов: ожидалось 4, получено " + args.length);
+            }
+
+            // Проверка введённых значений
+            if (a <= 0) {
+                throw new IllegalArgumentException("Кол-во элементов должно быть больше 0: " + a);
+            }
+            if (inline <= 0) {
+                throw new IllegalArgumentException("Кол-во элементов в строке должно быть больше 0: " + inline);
+            }
+            if (min >= max) {
+                throw new IllegalArgumentException("Нижняя граница должна быть меньше верхней");
+            }
+
+
+            double arr[] = new double[a]; // Создаём объект массива типа данных
+            Arrmod.fillRandom(arr, min, max);
+
+            double comp = Arrmod.calcComp(arr);
+
+            Arrmod.printArr(arr, inline);
+
+            System.out.printf("%.2f \n", comp);
+        }catch (NumberFormatException e){
+            System.out.println("Аргументы должны быть числами");
         }
-
-        if (args.length == 4){
-            a = Integer.parseInt(args[0]);
-            min = Double.parseDouble(args[1]);
-            max = Double.parseDouble(args[2]);
-            inline = Integer.parseInt(args[3]);
+        catch (InputMismatchException e){
+            System.out.println("Введено не число");
         }
-        else {
-            Scanner in = new Scanner(System.in);
-
-            System.out.println("Введите кол-во элементов в массиве");
-            a = in.nextInt();
-
-            System.out.println("Введите диапазон значений (нижняя и верхняя границы через пробел)");
-            min = in.nextDouble();
-            max = in.nextDouble();
-
-            System.out.println("Введите сколько нужно вывести элементов на одной строке");
-            inline = in.nextInt();
+        catch (NoSuchElementException e){
+            System.out.println("Ввод данных прерван");
         }
-
-        double arr[] = new double[a]; // Создаём объект массива типа данных
-        Arrmod.fillRandom(arr, min, max);
-
-        double comp = Arrmod.calcComp(arr);
-
-        Arrmod.printArr(arr, inline);
-
-        System.out.printf("%.2f \n", comp);
+        catch (IllegalArgumentException | ArithmeticException e){
+            System.out.println("Арифметическая ошибка");
+        }
+        catch (OutOfMemoryError e) {
+            System.out.println("Слишком большой размер массива");
+        }
     }
-
     private static void printhelp(){
         System.out.println("  Справка:");
         System.out.println("  java Main                            - ввод данных через консоль");

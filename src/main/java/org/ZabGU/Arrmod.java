@@ -30,6 +30,21 @@ public class Arrmod {
     // Формальные параметры: arr типа данных double, min - нижняя граница диапазона случайных чисел (double), max - верхняя
     // Функции ничего не возвращает
     static void fillRandom(double[]arr, double min, double max){
+
+        // Обработка исключительный ситуаций
+        if (arr == null){
+            throw new IllegalArgumentException("Массив не может быть null");
+        }
+
+        if (arr.length == 0){
+            throw new IllegalArgumentException("Массив не может быть пустым");
+        }
+
+        if (min > max){
+            throw new IllegalArgumentException("Нижняя граница диапазона не может быть больше верхней");
+        }
+
+
         Random rnd = new Random(); // создаём объект для генерации случайных чисел
         // Random() - задаёт случайный сид для генерации чисел
         // Random(10) - задаёт определённый сид для генерации чисел
@@ -44,6 +59,11 @@ public class Arrmod {
     // Формальные параметры: arr - массив типа данных double
     // Функция возвращает переменную типа данных double - comp, результат вычисления
     static double calcComp(double[] arr){
+
+        if (arr == null){
+            throw new IllegalArgumentException("Массив не может быть null");
+        }
+
         double comp = 1; // переменная для нахождения факториала чисел по модулю
 
         // Цикл, который вычисляет выражение
@@ -57,6 +77,15 @@ public class Arrmod {
     // Формальные параметры: arr - массив типа данных double, inline - кол-во элементов массива на одной строке
     // Функция ничего не возвращает
     static void printArr(double[] arr, int inline){
+
+        if (arr == null){
+            throw new IllegalArgumentException("Массив не может быть null");
+        }
+
+        if (inline <= 0) {
+            throw new IllegalArgumentException("inline аргумент должен быть положительным");
+        }
+
         int k = 0;
         // Вывод массива, через использование улучшенного цикла for-each
         // (double a : arr)
